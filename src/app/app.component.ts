@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {Student} from './student/student';
-import {FormComponent} from "../form/form.component";
 
 @Component({
   selector: 'app-root',
@@ -198,7 +197,7 @@ export class AppComponent {
     return false;
   }
 
-  Send(obj: object): void {
+  Send(obj: unknown): void {
     // @ts-ignore
     this.formStudent = obj.formStudent;
     // @ts-ignore

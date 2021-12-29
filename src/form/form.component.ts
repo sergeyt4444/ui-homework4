@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {Student} from '../app/student/student';
 
 @Component({
@@ -17,8 +17,8 @@ export class FormComponent {
     avgMark: 0
   };
 
-  addOrEdit: boolean = false;
-  @Output() buttonClick = new EventEmitter<Object>();
+  addOrEdit = false;
+  @Output() buttonClick = new EventEmitter<unknown>();
 
   addStudent(): void {
     this.formStudent.dob = new Date(this.formStudent.dob);
