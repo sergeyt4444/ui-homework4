@@ -192,4 +192,11 @@ export class AppComponent {
     this.formStudent.avgMark = 0;
     this.formTouched = false;
   }
+
+  validMark() : boolean {
+    if (this.formStudent.avgMark >= 0 && this.formStudent.avgMark <=5) {
+      return true;
+    }
+    return false;
+  }
 }
