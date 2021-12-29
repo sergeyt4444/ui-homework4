@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {Student} from './student/student';
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 
 @Component({
   selector: 'app-root',
@@ -198,10 +200,8 @@ export class AppComponent {
   }
 
   Send(obj: unknown): void {
-    // @ts-ignore
-    this.formStudent = obj.formStudent;
-    // @ts-ignore
-    if (obj.addOrEdit == true) {
+    this.formStudent = (obj as any).formStudent;
+    if ((obj as any).addOrEdit == true) {
       this.addStudentFromForm();
     }
     else {
