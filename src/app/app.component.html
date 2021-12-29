@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Студенты</title>
+</head>
+<body>
+<div class="viewVar">
+  <div id = "search">
+    <label id = "searchLabel">Поиск:</label>
+    <br/>
+    <input type="text" [(ngModel)]="search"/>
+  </div>
+  <div id = "sort">
+    <label id = "sortLabel">Сортировать по </label>
+    <select [(ngModel)]="sort">
+      <option>None</option>
+      <option>ФИО</option>
+      <option>Дате рождения</option>
+      <option>Среднему баллу</option>
+    </select>
+    <br/>
+    <button (click)="sortStudents()">Выполнить сортировку</button>
+  </div>
+  <div id = "filters">
+    <div id = "dobFilter">
+      <label id = "dobFilterLabel">Дата рождения:</label>
+      <br/>
+      <input type="date" value="{{dobStart}}" [(ngModel)]="dobStart"/>
+      <input type="date" value="{{dobFinish}}" [(ngModel)]="dobFinish"/>
+    </div>
+    <div id = "markFilter">
+      <label id = "markFilterLabel">Средняя оценка:</label>
+      <br/>
+      <input type="number" [(ngModel)]="markStart"/>
+      <input type="number" [(ngModel)]="markFinish"/>
+    </div>
+    <div>
+      <button (click)="filterStudents()">Применить фильтры</button>
+      <button (click)="resetFilters()">Сбросить фильтры</button>
+    </div>
+  </div>
+</div>
+<div>
+  <table class = "view">
+    <caption>Студенты</caption>
+    <tr>
+      <th>№</th>
+      <th>ФИО</th>
+      <th>Дата рождения</th>
+      <th>Средняя оценка</th>
+      <th></th>
+    </tr>
+    <tr
+      *ngFor="let student of students; let i = index"
+      [ngClass]="{highlighted : findStudent(student)}">
+      <td>{{i+1}}</td>
+      <td>{{student.lname + " " + student.fname + " " + student.patron}}</td>
+      <td>{{student.dob.toLocaleString().split(',')[0]}}</td>
+      <td>{{student.avgMark}}</td>
+      <td>
+        <button (click)="deleteStudent(i)">Удалить</button></td>
+    </tr>
+
+  </table>
+</div>
+<form id = "queryForm" novalidate #form="ngForm">
+  <div class = "form-group" >
+    <label>Фамилия:  </label>
+    <br/>
+    <input type="text" name = "lname" [(ngModel)] = "formStudent.lname"
+           required minlength="3" pattern="^[A-Za-z]+$"/>
+    <br/>
+    <label>Имя:      </label>
+    <br/>
+    <input type="text" name = "fname" [(ngModel)] = "formStudent.fname"
+           required minlength="3" pattern="^[A-Za-z]+$"/>
+    <br/>
+    <label>Отчество: </label>
+    <br/>
+    <input type="text" name = "patron" [(ngModel)] = "formStudent.patron"
+           required minlength="3" pattern="^[A-Za-z]+$"/>
+    <br/>
+  </div>
+  <div class = "form-group">
+    <label>Дата рождения: </label>
+    <br/>
+    <input type="date" name = "dob" [(ngModel)] = "formStudent.dob"/>
+    <br/>
+  </div>
+  <div class = "form-group">
+    <label>Средняя оценка: </label>
+    <br/>
+    <input type="number" name = "avgMark" [(ngModel)] = "formStudent.avgMark"/>
+    <br/>
+  </div>
+  <div class = "form-group">
+    <button [disabled]="!form.valid" (click)="addStudent() ">Добавить студента</button>
+    <button [disabled]="!form.valid" (click)="editStudent()">Изменить студента</button>
+  </div>
+</form>
+</body>
+</html>
+
