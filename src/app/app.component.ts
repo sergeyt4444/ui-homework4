@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {Student} from './student/student';
+import {FormComponent} from "../form/form.component";
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ export class AppComponent {
   students: Student[];
   search = '';
   sort = "None";
-  formTouched = false;
+  addOrEdit = false;
 
   dobStart = new Date('1980-01-01');
   dobFinish = new Date('2006-01-01');
@@ -153,7 +154,7 @@ export class AppComponent {
     this.filterStudents();
   }
 
-  addStudent(): void {
+  addStudentFromForm(): void {
     const tmpStud : Student = new Student(this.formStudent.fname,this.formStudent.lname,
       this.formStudent.patron, new Date(this.formStudent.dob), this.formStudent.avgMark);
     this.initStudents.push(tmpStud);
@@ -163,10 +164,9 @@ export class AppComponent {
     this.filterStudents();
     this.clearForm();
 
-    this.formTouched = true;
   }
 
-  editStudent(): void {
+  editStudentFromForm(): void {
     this.initStudents.forEach(val => {
       if (val.fname === this.formStudent.fname && val.lname === this.formStudent.lname
       && val.patron === this.formStudent.patron) {
@@ -181,7 +181,6 @@ export class AppComponent {
     this.filterStudents();
     this.clearForm();
 
-    this.formTouched = true;
   }
 
   private clearForm(): void {
@@ -190,7 +189,6 @@ export class AppComponent {
     this.formStudent.patron = "";
     this.formStudent.dob = new Date();
     this.formStudent.avgMark = 0;
-    this.formTouched = false;
   }
 
   validMark() : boolean {
@@ -198,5 +196,17 @@ export class AppComponent {
       return true;
     }
     return false;
+  }
+
+  Send(obj: object): void {
+    // @ts-ignore
+    this.formStudent = obj.formStudent;
+    // @ts-ignore
+    if (obj.addOrEdit == true) {
+      this.addStudentFromForm();
+    }
+    else {
+      this.editStudentFromForm();
+    }
   }
 }
